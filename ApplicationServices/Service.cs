@@ -4,10 +4,17 @@ namespace ApplicationServices
 {
     public class Service : IService
     {
+        private string returnValue = "WhatEver";
         [UseCache("week")]
         public string getValue(string id)
         {
-            return "whateverTest";
+            return returnValue;
+        }
+
+        [UseCache("week")]
+        public string getValue()
+        {
+            return returnValue;
         }
     }
 }

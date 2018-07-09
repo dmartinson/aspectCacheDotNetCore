@@ -28,9 +28,9 @@ namespace TestCacheApplication
             var service = container.Resolve<IService>();
 
             //Fix cache behavior only working for methods with parameters
-            Console.WriteLine(service.getValue(""));
+            Console.WriteLine($"First call: { service.getValue() }");
 
-            service.getValue("");
+            Console.WriteLine($"This comes from the cache: { service.getValue() }");
 
             Console.Read();
 

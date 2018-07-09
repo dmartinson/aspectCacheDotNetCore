@@ -34,9 +34,9 @@ namespace AspectCache.Behaviors
                 return getNext()(input, getNext);
             }
 
-            GetKeys(input, out var methodArgumentsToKey, out var cacheItemKey);
+            var cacheItemKey = GetKey(input);
 
-            if (!string.IsNullOrEmpty(methodArgumentsToKey))
+            if (!string.IsNullOrEmpty(cacheItemKey))
             {
                 var objectFromCache = this.cache.Get(cacheItemKey);
                 if (objectFromCache != null)
@@ -48,7 +48,7 @@ namespace AspectCache.Behaviors
             var result = getNext()(input, getNext);
 
 
-            if (string.IsNullOrEmpty(methodArgumentsToKey))
+            if (string.IsNullOrEmpty(cacheItemKey))
             {
                 return result;
             }
@@ -77,9 +77,9 @@ namespace AspectCache.Behaviors
             return attribute;
         }
 
-        private static void GetKeys(IMethodInvocation input, out string methodArgumentsToKey, out string cacheItemKey)
+        private static string GetKey(IMethodInvocation input)
         {
-            methodArgumentsToKey = string.Empty;
+            var methodArgumentsToKey = string.Empty;
             var count = 0;
             foreach (var argument in input.Arguments)
             {
@@ -91,7 +91,7 @@ namespace AspectCache.Behaviors
                 count++;
             }
 
-            cacheItemKey = $"{input.Target}.{input.MethodBase}:{methodArgumentsToKey}";
+            return $"{input.Target}.{input.MethodBase}:{methodArgumentsToKey}";
         }
     }
 }

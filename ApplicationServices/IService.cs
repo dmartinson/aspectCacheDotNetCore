@@ -3,5 +3,6 @@
     public interface IService
     {
         string getValue(string id);
+        string getValue();
     }
 }
